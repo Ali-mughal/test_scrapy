@@ -13,11 +13,13 @@ class QuotesSpider(scrapy.Spider):
         # run this commmand in consol 
         #scrapy runspider file_name(quotes.py)
         # make dictionary and get data
-        yield{
-            'auther_name':response.css('small.author').extract(),
-            'text':response.css('span.text::text').extract_first(),
-            'tags':response.css('a.tag::text').extract(),
-        }
+        for quote in response.css('div.quote'):
+            item={
+                'auther_name':quote.css('small.author').extract(),
+                'text':quote.css('span.text::text').extract_first(),
+                'tags':quote.css('a.tag::text').extract(),
+            }
+            yield(item)
         
         # now run spider again by usig scrapy runspider quotes.py
         ## we can save data in json  scrapy runspider -o items.json
