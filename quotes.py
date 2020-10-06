@@ -23,3 +23,6 @@ class QuotesSpider(scrapy.Spider):
         
         # now run spider again by usig scrapy runspider quotes.py
         ## we can save data in json  scrapy runspider -o items.json
+        ## now follow the pagination link
+        next_page_url = response.css('li.next a::attr(href)').get()
+        next_page_url = response.urljoin(next_page_url)
